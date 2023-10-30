@@ -2,7 +2,7 @@
   <li class="article-container" @click="handleCardClick">
     <div class="article">
       <div class="article-thumbnail">
-        <img v-if="post.cover" v-lazy="post.cover" alt="" />
+        <img v-if="post.img" v-lazy="post.img" alt="" />
         <img v-else src="@/assets/default-cover.jpg" />
         <span class="thumbnail-screen" :style="gradientBackground" />
       </div>

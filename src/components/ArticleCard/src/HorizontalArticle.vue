@@ -5,7 +5,7 @@
         <img class="ob-hz-thumbnail" src="@/assets/default-cover.jpg" />
         <span class="thumbnail-screen" :style="bannerHoverGradient" />
       </div>
-      <div class="feature-content">广告位</div>
+      <!-- <div class="feature-content">广告位</div> -->
     </div>
   </div>
 </template>
