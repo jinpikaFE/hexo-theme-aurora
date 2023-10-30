@@ -7,8 +7,9 @@
         class="ob-gradient-plate opacity-90 relative z-10 bg-ob-deep-900 rounded-2xl px-6 py-6 shadow-md custom-container"
       >
         <h2 class="text-1xl">
-          <p :style="gradientText" v-for="item in dataList" :key="item.key">
-            <a :href="item.href">
+          <p class="a-item" v-for="item in dataList" :key="item.key">
+            <img class="img-box" v-if="item.img" :src="item.img" />
+            <a :href="item.href" :style="gradientText">
               {{ item.title }}
             </a>
           </p>
@@ -22,21 +23,21 @@
 
     <div>
       <ul v-for="item in dataList" :key="item.key">
-        <p>{{ item.title }}</p>
+        <p class="flex items-center">
+          <img class="img-box" v-if="item.img" :src="item.img" />
+          {{ item.title }}
+        </p>
         <ul class="grid lg:grid-cols-4 gap-7">
-          <!-- <template v-if="dataList.length > 0">
-        <li v-for="post in dataList" :key="post.id">
-          <ArticleCard :data="post" />
-        </li>
-      </template>
-      <template v-else>
-        <li v-for="n in 12" :key="n">
-          <ArticleCard :data="{}" />
-        </li>
-      </template> -->
-          <li v-for="n in 4" :key="n">
-            <ArticleCard :data="{}" />
-          </li>
+          <template v-if="item.settingWebUrls.length > 0">
+            <li v-for="post in item.settingWebUrls" :key="post.id">
+              <ArticleCard :data="post" />
+            </li>
+          </template>
+          <template v-else>
+            <li v-for="n in 12" :key="n">
+              <ArticleCard :data="{}" />
+            </li>
+          </template>
         </ul>
       </ul>
     </div>
@@ -135,6 +136,33 @@ export default defineComponent({
   &::-webkit-scrollbar {
     width: 0px;
   }
+}
+
+.a-item {
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
+  margin: 4px 0;
+  &:hover {
+    background: linear-gradient(
+      130deg,
+      rgba(36, 198, 220, 0.1),
+      rgba(84, 51, 255, 0.1) 41.07%,
+      rgba(255, 0, 153, 0.1) 76.05%
+    );
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+
+.img-box {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+a:hover {
+  opacity: 1;
 }
 
 @media (max-width: 1024px) {

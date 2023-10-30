@@ -7,98 +7,18 @@
         <span class="thumbnail-screen" :style="gradientBackground" />
       </div>
       <div class="article-content">
-        <span>
-          <b v-if="post.pinned" class="article-tag">
-            <span>
-              <SvgIcon
-                icon-class="hot"
-                width="1.rem"
-                height="1.05rem"
-                class="-mb-0.5"
-                stroke="currentColor"
-              />
-              <span>{{ t('settings.pinned') }}</span>
-            </span>
-          </b>
-          <b v-if="post.feature" class="article-tag">
-            <span>
-              <SvgIcon
-                icon-class="hot"
-                width="1.05rem"
-                height="1.05rem"
-                class="-mb-0.5"
-                stroke="currentColor"
-              />
-              <span>{{ t('settings.featured') }}</span>
-            </span>
-          </b>
-          <b
-            v-if="post.categories && post.categories.length > 0"
-            @click="navigateToCategory(post.categories[0].slug)"
-          >
-            {{ post.categories[0].name }}
-          </b>
-          <b v-else-if="post.categories && post.categories.length <= 0">
-            {{ t('settings.default-category') }}
-          </b>
-          <ob-skeleton v-else tag="b" height="20px" width="35px" />
-        </span>
-
-        <span class="flex flex-wrap">
-          <ul v-if="post.tags && post.tags.length > 0">
-            <li
-              v-for="tag in post.min_tags"
-              :key="tag.slug"
-              @click="navigateToTag(tag.slug)"
-            >
-              <em># </em><span>{{ tag.name }}</span>
-            </li>
-          </ul>
-          <ul v-else-if="post.tags && post.tags.length <= 0">
-            <li>
-              <em>#</em><span>{{ t('settings.default-tag') }}</span>
-            </li>
-          </ul>
-          <ul v-else>
-            <ob-skeleton
-              v-if="!post.tags"
-              :count="2"
-              tag="li"
-              height="16px"
-              width="35px"
-            />
-          </ul>
-        </span>
-
-        <router-link
-          v-if="post.title"
-          :to="{ name: 'post-slug', params: { slug: post.slug } }"
-        >
-          <h1 data-dia="article-link">{{ post.title }}</h1>
-        </router-link>
-        <ob-skeleton v-else tag="h1" height="3rem" />
-
-        <div class="article-footer" v-if="post.author && post.date">
+        <div class="article-footer" v-if="post.img">
           <div class="flex flex-row items-center">
-            <img
-              :class="avatarClasses"
-              :src="post.author.avatar"
-              :alt="`avatar-${post.author.name}`"
-              @click="handleAuthorClick(post.author.link)"
-            />
+            <img :class="avatarClasses" :src="post.img" />
             <span class="text-ob-dim">
               <strong
                 class="text-ob-normal pr-1.5 hover:text-ob hover:opacity-50 cursor-pointer"
-                @click="handleAuthorClick(post.author.link)"
               >
-                {{ post.author.name }}
+                {{ post.name }}
               </strong>
-              {{ t('settings.shared-on') }} {{ t(post.date.month) }}
-              {{ post.date.day }}, {{ post.date.year }}
             </span>
           </div>
         </div>
-
         <div class="article-footer" v-else>
           <div class="flex flex-row items-center mt-6">
             <ob-skeleton
@@ -112,6 +32,8 @@
             </span>
           </div>
         </div>
+        <h6 data-dia="article-link" v-if="post.desc">{{ post.desc }}</h6>
+        <ob-skeleton v-else tag="h1" height="3rem" />
       </div>
     </div>
   </li>
@@ -121,12 +43,10 @@
 import { useAppStore } from '@/stores/app'
 import { computed, defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
-import SvgIcon from '@/components/SvgIcon/index.vue'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'ARArticleCard',
-  components: { SvgIcon },
   props: {
     data: {
       type: Object,
