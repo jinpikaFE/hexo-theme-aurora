@@ -1,4 +1,3 @@
-import { fetchAuthorPost } from '@/api'
 import { AuthorPosts } from '@/models/Post.class'
 import { defineStore } from 'pinia'
 
@@ -10,10 +9,9 @@ export const useAuthorStore = defineStore({
   getters: {},
   actions: {
     /** Fetching author's info */
-    async fetchAuthorData(slug: string): Promise<AuthorPosts> {
-      const { data } = await fetchAuthorPost(slug)
+    async fetchAuthorData(): Promise<AuthorPosts> {
       return new Promise(resolve => {
-        resolve(new AuthorPosts(data))
+        resolve(new AuthorPosts())
       })
     }
   }

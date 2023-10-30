@@ -3,7 +3,7 @@
     <Feature v-if="themeConfig.theme.feature" :data="topFeature">
       <FeatureList :data="featurePosts" />
     </Feature>
-    <template v-else>
+    <!-- <template v-else>
       <horizontal-article class="mb-8" :data="posts.data[0] || {}" />
     </template>
     <div class="main-grid" id="article-list">
@@ -91,42 +91,26 @@
           </Sticky>
         </Sidebar>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import { Feature, FeatureList } from '@/components/Feature'
-import { ArticleCard, HorizontalArticle } from '@/components/ArticleCard'
-import { MainTitle } from '@/components/Title'
-import { Sidebar, TagBox, RecentComment, Profile } from '@/components/Sidebar'
 import { usePostStore } from '@/stores/post'
 import { FeaturePosts, PostList } from '@/models/Post.class'
 import { useAppStore } from '@/stores/app'
 import { useI18n } from 'vue-i18n'
 import { useCategoryStore } from '@/stores/category'
-import Paginator from '@/components/Paginator.vue'
 import { useMetaStore } from '@/stores/meta'
-import SvgIcon from '@/components/SvgIcon/index.vue'
 import usePageTitle from '@/hooks/usePageTitle'
-import Sticky from '@/components/Sticky.vue'
 
 export default defineComponent({
   name: 'ARHome',
   components: {
     Feature,
-    FeatureList,
-    ArticleCard,
-    HorizontalArticle,
-    MainTitle,
-    Sidebar,
-    TagBox,
-    Paginator,
-    RecentComment,
-    Profile,
-    SvgIcon,
-    Sticky
+    FeatureList
   },
   setup() {
     useMetaStore().setTitle('home')
@@ -189,7 +173,7 @@ export default defineComponent({
       backToArticleTop()
       if (slug !== '') {
         posts.value = new PostList()
-        postStore.fetchPostsByCategory(slug).then(postList => {
+        postStore.fetchPostsByCategory().then(postList => {
           posts.value = postList
           pagination.value.pageTotal = postList.total
         })

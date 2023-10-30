@@ -1,4 +1,3 @@
-import { fetchSearchIndexes } from '@/api'
 import { RecentSearchResults, SearchIndexes } from '@/models/Search.class'
 import { defineStore } from 'pinia'
 
@@ -18,13 +17,6 @@ export const useSearchStore = defineStore({
   },
   actions: {
     /** Fetching the pre-built lunr search index. */
-    async fetchSearchIndex(): Promise<SearchIndexes> {
-      const { data } = await fetchSearchIndexes()
-      this.searchIndexes = new SearchIndexes(data)
-      return new Promise(resolve => {
-        resolve(this.searchIndexes)
-      })
-    },
     /**
      * Handle the opening and closing of search modal.
      * - Adding a modal--active class to force body to overflow

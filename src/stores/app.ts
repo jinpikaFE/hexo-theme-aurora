@@ -3,7 +3,6 @@ import Cookies from 'js-cookie'
 import i18n from '@/locales/index'
 import { Locales, ThemeConfig } from '@/models/ThemeConfig.class'
 import { HexoConfig } from '@/models/HexoConfig.class'
-import { fetchHexoConfig, fetchStatistic } from '@/api'
 import { Statistic } from '@/models/Statistic.class'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
@@ -73,21 +72,13 @@ export const useAppStore = defineStore('app', {
     /** Fetching Hexo and Hexo theme's config data */
     async fetchConfig() {
       this.configReady = false
-      const { data } = await fetchHexoConfig()
-      this.themeConfig = new ThemeConfig(data)
-      this.hexoConfig = new HexoConfig(data)
+      this.themeConfig = new ThemeConfig()
+      this.hexoConfig = new HexoConfig()
       this.setDefaultLocale(this.themeConfig.site.language)
       this.initializeTheme(this.themeConfig.theme.dark_mode)
       this.configReady = true
     },
-    /** Fetching blog's statistics */
-    async fetchStat() {
-      const { data } = await fetchStatistic()
-      return new Promise(resolve => {
-        this.statistic = new Statistic(data)
-        resolve(this.statistic)
-      })
-    },
+
     /** Initializing the theme mode of the app. */
     initializeTheme(isDarkMode?: boolean | string) {
       if (!Cookies.get('theme') && isDarkMode !== 'auto') {

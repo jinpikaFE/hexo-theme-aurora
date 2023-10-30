@@ -1,5 +1,5 @@
 <template>
-  <li class="article-container" @click="handleCardClick(post?.slug)">
+  <li class="article-container">
     <div class="article">
       <div class="article-thumbnail">
         <img v-if="post.cover" v-lazy="post.cover" alt="" />
@@ -78,9 +78,6 @@
         </router-link>
         <ob-skeleton v-else tag="h1" height="3rem" />
 
-        <p v-if="post.text">{{ post.text }}</p>
-        <ob-skeleton v-else tag="p" :count="4" height="16px" />
-
         <div class="article-footer" v-if="post.author && post.date">
           <div class="flex flex-row items-center">
             <img
@@ -111,7 +108,7 @@
               :circle="true"
             />
             <span class="text-ob-dim mt-1">
-              <ob-skeleton height="20px" width="150px" />
+              <ob-skeleton height="20px" />
             </span>
           </div>
         </div>
@@ -141,11 +138,6 @@ export default defineComponent({
     const appStore = useAppStore()
     const { t } = useI18n()
 
-    const handleCardClick = (slug?: string) => {
-      if (!slug) return
-      router.push({ name: 'post-slug', params: { slug } })
-    }
-
     const handleAuthorClick = (link: string) => {
       if (link === '') link = window.location.href
       window.location.href = link
@@ -171,7 +163,6 @@ export default defineComponent({
       navigateToTag,
       navigateToCategory,
       handleAuthorClick,
-      handleCardClick,
       t
     }
   }
