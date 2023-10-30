@@ -1,5 +1,5 @@
 <template>
-  <li class="article-container">
+  <li class="article-container" @click="handleCardClick">
     <div class="article">
       <div class="article-thumbnail">
         <img v-if="post.cover" v-lazy="post.cover" alt="" />
@@ -71,6 +71,10 @@ export default defineComponent({
       router.push({ name: 'post-search', query: { category: slug } })
     }
 
+    const handleCardClick = () => {
+      window.location.href = props.data.url
+    }
+
     return {
       avatarClasses: computed(() => ({
         'hover:opacity-50 cursor-pointer': true,
@@ -83,6 +87,7 @@ export default defineComponent({
       navigateToTag,
       navigateToCategory,
       handleAuthorClick,
+      handleCardClick,
       t
     }
   }
