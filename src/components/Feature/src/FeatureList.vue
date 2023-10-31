@@ -7,12 +7,17 @@
         class="ob-gradient-plate opacity-90 relative z-10 bg-ob-deep-900 rounded-2xl px-6 py-6 shadow-md custom-container"
       >
         <h2 class="text-1xl">
-          <p class="a-item" v-for="item in dataList" :key="item.key">
-            <img class="img-box" v-if="item.img" :src="item.img" />
-            <a :href="item.href" :style="gradientText">
-              {{ item.title }}
-            </a>
-          </p>
+          <a v-for="item in dataList" :key="item.key" :href="item.href">
+            <p
+              class="a-item"
+              :class="item.key === activeAnchor && 'a-item-active'"
+            >
+              <img class="img-box" v-if="item.img" :src="item.img" />
+              <span :style="gradientText">
+                {{ item.title }}
+              </span>
+            </p>
+          </a>
         </h2>
       </div>
       <span
@@ -22,7 +27,7 @@
     </div>
 
     <div>
-      <ul v-for="item in dataList" :key="item.key">
+      <ul v-for="item in dataList" :key="item.key" :id="item.key">
         <p class="flex items-center">
           <img class="img-box" v-if="item.img" :src="item.img" />
           {{ item.title }}
@@ -53,7 +58,9 @@ import {
   computed,
   defineComponent,
   toRefs,
-  ref
+  ref,
+  onMounted,
+  onUnmounted
 } from 'vue'
 import { ArticleCard } from '@/components/ArticleCard'
 import { Post } from '@/models/Post.class'
@@ -75,6 +82,15 @@ export default defineComponent({
     const featurePosts = toRefs(props).data
     const { t } = useI18n()
     const dataList: any = ref([])
+    const activeAnchor = ref<number>()
+
+    onMounted(() => {
+      window.addEventListener('scroll', highlightActiveSection)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('scroll', highlightActiveSection)
+    })
 
     const transformData: any = (data: any[]) => {
       const filteredData = data
@@ -103,6 +119,31 @@ export default defineComponent({
       console.log(res)
     }
 
+    const onAnchoreClick = (item: any) => {
+      activeAnchor.value = item?.key
+      const element = document.getElementById(item?.key)
+
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+        window.location.hash = item?.key
+      }
+    }
+
+    const highlightActiveSection = () => {
+      const scrollPosition = window.scrollY
+      for (const section of dataList.value) {
+        const element = document.getElementById(section.key)
+        if (element) {
+          const sectionTop = element.offsetTop
+          const sectionBottom = sectionTop + element.clientHeight
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            activeAnchor.value = section.key
+            window.location.hash = section.key
+          }
+        }
+      }
+    }
+
     getData()
 
     return {
@@ -114,7 +155,9 @@ export default defineComponent({
       ),
       featurePosts,
       t,
-      dataList
+      dataList,
+      activeAnchor,
+      onAnchoreClick
     }
   }
 })
@@ -152,6 +195,16 @@ export default defineComponent({
     );
     border-radius: 4px;
     cursor: pointer;
+  }
+
+  &-active {
+    background: linear-gradient(
+      130deg,
+      rgba(36, 198, 220, 0.1),
+      rgba(84, 51, 255, 0.1) 41.07%,
+      rgba(255, 0, 153, 0.1) 76.05%
+    );
+    border-radius: 4px;
   }
 }
 

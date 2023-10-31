@@ -10,7 +10,7 @@ const router = createRouter({
       if (to.hash) {
         setTimeout(() => {
           resolve({ el: to.hash, behavior: 'smooth', top: 81 })
-        }, 1500)
+        }, 0)
       } else if (savedPosition) {
         resolve(savedPosition)
       } else {
