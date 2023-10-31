@@ -7,7 +7,12 @@
         class="ob-gradient-plate opacity-90 relative z-10 bg-ob-deep-900 rounded-2xl px-6 py-6 shadow-md custom-container"
       >
         <h2 class="text-1xl">
-          <a v-for="item in dataList" :key="item.key" :href="item.href">
+          <a
+            v-for="item in dataList"
+            :key="item.key"
+            :href="item.href"
+            @click.prevent="onAnchoreClick(item)"
+          >
             <p
               class="a-item"
               :class="item.key === activeAnchor && 'a-item-active'"
@@ -125,7 +130,6 @@ export default defineComponent({
 
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' })
-        window.location.hash = item?.key
       }
     }
 
@@ -138,7 +142,6 @@ export default defineComponent({
           const sectionBottom = sectionTop + element.clientHeight
           if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
             activeAnchor.value = section.key
-            window.location.hash = section.key
           }
         }
       }
