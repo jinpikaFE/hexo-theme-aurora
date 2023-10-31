@@ -72,7 +72,7 @@ export default defineComponent({
     }
 
     const handleCardClick = () => {
-      window.location.href = props.data.url
+      window.open(props.data.url)
     }
 
     return {
