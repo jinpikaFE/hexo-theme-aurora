@@ -4,13 +4,7 @@
     @click="handleLogoClick"
   >
     <span class="flex mr-3">
-      <img
-        v-if="themeConfig.site.author"
-        :class="avatarClass"
-        :src="themeConfig.site.logo || themeConfig.site.avatar"
-        alt="site-logo"
-      />
-      <ob-skeleton v-else width="2rem" height="2rem" circle />
+      <img :class="avatarClass" :src="Logo" alt="site-logo" />
     </span>
 
     <div class="flex flex-col justify-center">
@@ -24,12 +18,12 @@
         v-else
         class="text-invert flex text-xl leading-tight text-white font-extrabold"
       >
-        LOADING
+        AI 工具集
       </span>
       <span
         class="text-invert font-extrabold text-[0.45rem] leading-tight uppercase text-white"
       >
-        {{ themeConfig.site.nick || 'BLOG' }}
+        {{ themeConfig.site.nick || 'tools' }}
       </span>
     </div>
   </div>
@@ -39,6 +33,7 @@
 import { useAppStore } from '@/stores/app'
 import { computed, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
+import Logo from '/favicon.png'
 
 export default defineComponent({
   name: 'ArLogo',
@@ -58,7 +53,8 @@ export default defineComponent({
           [appStore.themeConfig.theme.profile_shape]: true
         }
       }),
-      themeConfig: computed(() => appStore.themeConfig)
+      themeConfig: computed(() => appStore.themeConfig),
+      Logo
     }
   }
 })
