@@ -1,4 +1,3 @@
-'use client'
 import axios from 'axios'
 import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 import type { RequestInterceptors, RequestConfig } from './interface'

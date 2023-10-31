@@ -1,4 +1,3 @@
-import { fetchAllTags } from '@/api'
 import { Tags } from '@/models/Post.class'
 import { defineStore } from 'pinia'
 
@@ -13,19 +12,16 @@ export const useTagStore = defineStore({
   getters: {},
   actions: {
     async fetchAllTags() {
-      const { data } = await fetchAllTags()
       return new Promise(resolve => {
-        this.tags = new Tags(data).data
+        this.tags = new Tags().data
         resolve(this.tags)
       })
     },
-    async fetchTagsByCount(count: number) {
+    async fetchTagsByCount() {
       this.isLoaded = false
-      const { data } = await fetchAllTags()
       return new Promise(resolve => {
         this.isLoaded = true
-        const maxLength = data.length > count ? count : data.length
-        this.tags = new Tags(data.splice(0, maxLength)).data
+        this.tags = new Tags().data
         resolve(this.tags)
       })
     }

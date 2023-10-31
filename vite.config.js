@@ -8,10 +8,10 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
-  const filenamePath =
-    process.env.VITE_MODE === 'production'
-      ? '../layout/index.ejs'
-      : 'index.html'
+  // const filenamePath =
+  //   process.env.VITE_MODE === 'production'
+  //     ? '../layout/index.ejs'
+  //     : 'index.html'
   const templatePath =
     process.env.VITE_MODE === 'production'
       ? 'templates/index_prod.html'
@@ -58,7 +58,7 @@ export default ({ mode }) => {
       createHtmlPlugin({
         minify: true,
         entry: '/src/main.ts',
-        filename: filenamePath,
+        // filename: filenamePath,
         template: templatePath
       }),
       vue(),
