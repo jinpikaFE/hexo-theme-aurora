@@ -1,5 +1,6 @@
 <template>
   <div class="block mt-8">
+    <HomeSearch />
     <Feature v-if="themeConfig.theme.feature" :data="topFeature">
       <FeatureList :data="featurePosts" />
     </Feature>
@@ -105,12 +106,14 @@ import { useI18n } from 'vue-i18n'
 import { useCategoryStore } from '@/stores/category'
 import { useMetaStore } from '@/stores/meta'
 import usePageTitle from '@/hooks/usePageTitle'
+import { HomeSearch } from '@/components/HomeSearch'
 
 export default defineComponent({
   name: 'ARHome',
   components: {
     Feature,
-    FeatureList
+    FeatureList,
+    HomeSearch
   },
   setup() {
     useMetaStore().setTitle('home')

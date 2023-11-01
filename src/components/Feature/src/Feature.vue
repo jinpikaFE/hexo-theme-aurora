@@ -1,6 +1,6 @@
 <template>
   <div id="feature">
-    <horizontal-article :data="featurePost" />
+    <!-- <horizontal-article :data="featurePost" /> -->
     <!-- Feature sub-component -->
     <slot />
   </div>
@@ -8,14 +8,14 @@
 
 <script lang="ts">
 import { defineComponent, toRefs } from 'vue'
-import HorizontalArticle from '@/components/ArticleCard/src/HorizontalArticle.vue'
+// import HorizontalArticle from '@/components/ArticleCard/src/HorizontalArticle.vue'
 
 export default defineComponent({
   name: 'ArFeature',
   props: {
     data: Object
   },
-  components: { HorizontalArticle },
+  components: {},
   setup(props) {
     const featurePost = toRefs(props).data
 

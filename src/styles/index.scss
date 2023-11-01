@@ -146,3 +146,8 @@ b {
     opacity: 0;
   }
 }
+
+.absolute-center {
+  left: 50%;
+  transform: translateX(-50%);
+}

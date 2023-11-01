@@ -33,7 +33,7 @@
 
     <div>
       <ul v-for="item in dataList" :key="item.key" :id="item.key">
-        <p class="flex items-center">
+        <p class="flex items-center mt-2 mb-2">
           <img class="img-box" v-if="item.img" :src="item.img" />
           {{ item.title }}
         </p>

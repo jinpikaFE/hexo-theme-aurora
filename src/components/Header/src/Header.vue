@@ -9,6 +9,7 @@
       <header class="site-header lg:max-w-screen-2xl px-3 lg:px-8">
         <Logo />
         <Navigation />
+        <div class="pr-10 max-lg:hidden"><HomeSearch v-if="active" /></div>
         <Controls :scroll-progress="progress" />
         <Notification />
       </header>
@@ -21,6 +22,7 @@ import { computed, defineComponent, ref } from 'vue'
 import { Logo, Navigation, Controls, Notification } from '../index'
 import Sticky from '@/components/Sticky.vue'
 import { useNavigatorStore } from '@/stores/navigator'
+import { HomeSearch } from '@/components/HomeSearch'
 
 export default defineComponent({
   name: 'ArHeader',
@@ -29,7 +31,8 @@ export default defineComponent({
     Navigation,
     Controls,
     Notification,
-    Sticky
+    Sticky,
+    HomeSearch
   },
   props: {
     msg: String
