@@ -12,10 +12,10 @@ export default ({ mode }) => {
   //   process.env.VITE_MODE === 'production'
   //     ? '../layout/index.ejs'
   //     : 'index.html'
-  const templatePath =
-    process.env.VITE_MODE === 'production'
-      ? 'templates/index_prod.html'
-      : 'templates/index.html'
+  // const templatePath =
+  //   process.env.VITE_MODE === 'production'
+  //     ? 'templates/index_prod.html'
+  //     : 'templates/index.html'
 
   return defineConfig({
     build: {
@@ -59,7 +59,7 @@ export default ({ mode }) => {
         minify: true,
         entry: '/src/main.ts',
         // filename: filenamePath,
-        template: templatePath
+        template: 'templates/index.html'
       }),
       vue(),
       Pages({})
