@@ -5,7 +5,7 @@
     tabindex="0"
   >
     <div :class="leftControlClasses">
-      <span
+      <!-- <span
         class="icon-control flex items-center text-invert"
         data-dia="search"
         @click="handleOpenModal(true)"
@@ -17,7 +17,7 @@
           width="1.2rem"
           height="1.2rem"
         />
-      </span>
+      </span> -->
       <Dropdown
         v-if="enableMultiLanguage"
         @command="handleClick"

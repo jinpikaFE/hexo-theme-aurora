@@ -9,7 +9,7 @@
       <header class="site-header lg:max-w-screen-2xl px-3 lg:px-8">
         <Logo />
         <Navigation />
-        <div class="pr-10 max-lg:hidden"><HomeSearch v-if="active" /></div>
+        <div class="pr-5 max-lg:hidden"><HomeSearch v-if="active" /></div>
         <Controls :scroll-progress="progress" />
         <Notification />
       </header>

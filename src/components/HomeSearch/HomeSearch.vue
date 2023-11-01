@@ -32,6 +32,20 @@
           @blur="isFocus = false"
           @keydown.enter="onSearch"
         />
+        <span
+          class="icon-control flex items-center text-invert cursor-pointer"
+          data-dia="search"
+          @click="handleClose"
+          v-if="homeSearchStore.searchVal"
+        >
+          <SvgIcon
+            icon-class="close"
+            fill="currentColor"
+            stroke="none"
+            width="0.8rem"
+            height="0.8rem"
+          />
+        </span>
       </div>
       <section
         class="search-list rounded-[12px] border-[1px] border-solid mt-5 p-[20px] w-[568px] max-w-[86vw] z-50"
@@ -84,6 +98,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import { useHomeSearchStore, SearchTypeList } from '@/stores/homeSearch'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const homeSearchStore = useHomeSearchStore()
 
@@ -99,6 +114,10 @@ const onSearch = () => {
   window.open(
     `${homeSearchStore.selectedSearch.searchUrl}${homeSearchStore.searchVal}`
   )
+}
+
+const handleClose = () => {
+  homeSearchStore.setSearchVal('')
 }
 
 onMounted(() => {
@@ -147,7 +166,7 @@ onMounted(() => {
   backdrop-filter: blur(40px);
   box-shadow: 0 4px 16px -4px #0000000d;
   background-color: rgba(255, 255, 255, 0.8);
-  padding-right: 10px;
+  padding-right: 18px;
 }
 
 .search-box-active {
