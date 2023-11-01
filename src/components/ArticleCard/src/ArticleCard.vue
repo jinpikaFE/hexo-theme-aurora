@@ -1,11 +1,13 @@
 <template>
   <li class="article-container" @click="handleCardClick">
-    <div class="article">
-      <div class="article-thumbnail">
+    <div class="article pt-5">
+      <!-- <div
+        class="article-thumbnail max-lg:relative max-lg:row-span-2 max-lg:h-20 lg:hidden"
+      >
         <img v-if="post.img" v-lazy="post.img" alt="" />
         <img v-else src="@/assets/default-cover.jpg" />
         <span class="thumbnail-screen" :style="gradientBackground" />
-      </div>
+      </div> -->
       <div class="article-content">
         <div class="article-footer" v-if="post.img">
           <div class="flex flex-row items-center">

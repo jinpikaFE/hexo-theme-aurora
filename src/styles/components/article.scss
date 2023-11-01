@@ -13,10 +13,9 @@
 }
 
 .article {
-  @apply relative top-0 z-10 rounded-2xl bg-ob-deep-800 shadow-lg grid grid-rows-3 overflow-hidden h-full;
+  @apply relative top-0 z-10 rounded-2xl bg-ob-deep-800 shadow-lg overflow-hidden h-full;
   transition: transform 0.2s ease-in-out;
   .article-thumbnail {
-    @apply row-span-2 relative;
     img {
       @apply rounded-2xl block absolute z-20 bg-cover bg-no-repeat object-cover w-full h-12/10;
     }
