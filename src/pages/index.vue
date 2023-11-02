@@ -22,9 +22,16 @@
         热门工具
       </p>
       <ul class="grid lg:grid-cols-6 gap-7">
-        <li v-for="n in 12" :key="n">
-          <ArticleCard :data="{}" />
-        </li>
+        <template v-if="hotCardList.length > 0">
+          <li v-for="post in hotCardList" :key="post.id">
+            <ArticleCard :data="post" />
+          </li>
+        </template>
+        <template v-else>
+          <li v-for="n in 12" :key="n">
+            <ArticleCard :data="{}" />
+          </li>
+        </template>
       </ul>
     </section>
     <section>
@@ -48,9 +55,16 @@
         最新工具
       </p>
       <ul class="grid lg:grid-cols-6 gap-7">
-        <li v-for="n in 12" :key="n">
-          <ArticleCard :data="{}" />
-        </li>
+        <template v-if="newCardList.length > 0">
+          <li v-for="post in newCardList" :key="post.id">
+            <ArticleCard :data="post" />
+          </li>
+        </template>
+        <template v-else>
+          <li v-for="n in 12" :key="n">
+            <ArticleCard :data="{}" />
+          </li>
+        </template>
       </ul>
     </section>
     <Feature v-if="themeConfig.theme.feature" :data="topFeature">
@@ -160,6 +174,7 @@ import { useMetaStore } from '@/stores/meta'
 import usePageTitle from '@/hooks/usePageTitle'
 import { HomeSearch } from '@/components/HomeSearch'
 import { ArticleCard } from '@/components/ArticleCard'
+import { getSeetingWebUrl } from '@/api'
 
 export default defineComponent({
   name: 'ARHome',
@@ -176,7 +191,28 @@ export default defineComponent({
     const categoryStore = useCategoryStore()
     const { updateTitleByText } = usePageTitle()
     const { t } = useI18n()
+    const hotCardList = ref<any[]>([])
+    const newCardList = ref<any[]>([])
 
+    const getCardData = async () => {
+      const resHot = await getSeetingWebUrl({
+        pageIndex: 1,
+        pageNumber: 20,
+        status: 2,
+        type: 1,
+        sort: 'desc'
+      })
+      hotCardList.value = resHot?.data?.list
+      const resNew = await getSeetingWebUrl({
+        pageIndex: 1,
+        pageNumber: 20,
+        status: 2,
+        type: 2,
+        sort: 'desc'
+      })
+      newCardList.value = resNew?.data?.list
+    }
+    getCardData()
     /** Variables Section */
 
     const topFeature = ref(new FeaturePosts().top_feature)
@@ -297,7 +333,9 @@ export default defineComponent({
       activeTab,
       pagination,
       pageChangeHanlder,
-      t
+      t,
+      newCardList,
+      hotCardList
     }
   }
 })
