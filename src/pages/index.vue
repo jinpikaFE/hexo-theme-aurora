@@ -197,7 +197,7 @@ export default defineComponent({
     const getCardData = async () => {
       const resHot = await getSeetingWebUrl({
         pageIndex: 1,
-        pageNumber: 20,
+        pageSize: 12,
         status: 2,
         type: 1,
         sort: 'desc'
@@ -205,7 +205,7 @@ export default defineComponent({
       hotCardList.value = resHot?.data?.list
       const resNew = await getSeetingWebUrl({
         pageIndex: 1,
-        pageNumber: 20,
+        pageSize: 12,
         status: 2,
         type: 2,
         sort: 'desc'

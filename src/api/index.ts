@@ -11,7 +11,7 @@ export async function getSeetingSortTree() {
 
 export async function getSeetingWebUrl(params: {
   pageIndex: number
-  pageNumber: number
+  pageSize: number
   name?: string
   url?: string
   type?: 0 | 1 | 2 // 1 最热 2 上新
