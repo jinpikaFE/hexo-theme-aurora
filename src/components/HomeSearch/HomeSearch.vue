@@ -28,8 +28,13 @@
           class="search-input h-full w-full"
           placeholder="输入搜索内容"
           v-model="homeSearchStore.searchVal"
-          @focus="isFocus = true"
-          @blur="isFocus = false"
+          @focus="
+            () => {
+              isFocus = true
+              showAssociateList = true
+            }
+          "
+          @blur="onSearchBlur"
           @keydown.enter="onSearch"
         />
         <span
@@ -91,20 +96,75 @@
           </ul>
         </div>
       </section>
+      <section
+        class="search-list rounded-[12px] border-[1px] border-solid mt-5 p-[10px] w-[568px] max-w-[86vw] z-50"
+        v-show="showAssociateList && homeSearchStore.searchVal"
+      >
+        <div class="wrapper text-[12px]" data-v-7ac19e27="">
+          <ul class="relative">
+            <li
+              class="associat-item cursor-pointer search-drop flex items-center w-full"
+              v-for="(item, index) in homeSearchStore.associateList"
+              :key="index"
+              @click="onAssociateSearch(item)"
+            >
+              <span
+                class="icon-control flex items-center text-invert cursor-pointer mr-2"
+                data-dia="search"
+                @click="onAssociateSearch(item)"
+              >
+                <SvgIcon
+                  icon-class="search"
+                  fill="currentColor"
+                  stroke="none"
+                  width="0.8rem"
+                  height="0.8rem"
+                />
+              </span>
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+      </section>
     </section>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useHomeSearchStore, SearchTypeList } from '@/stores/homeSearch'
 import SvgIcon from '@/components/SvgIcon/index.vue'
+import jsonp from 'jsonp'
 
 const homeSearchStore = useHomeSearchStore()
 
 const isFocus = ref(false)
 const showTypeList = ref(false)
 const typeDom = ref<any>(null)
+const showAssociateList = ref(false)
+
+watch(
+  () => homeSearchStore.searchVal,
+  async cursearchVal => {
+    if (cursearchVal) {
+      jsonp(
+        `https://suggestion.baidu.com/su?p=3&ie=UTF-8&wd=${cursearchVal}`,
+        null,
+        (err: any, data: any) => {
+          if (err) {
+            console.error(err.message)
+          } else {
+            console.log(data)
+          }
+        }
+      )
+    } else {
+      homeSearchStore.setAssociateList([])
+    }
+
+    // console.log(res)
+  }
+)
 
 const onSearchTypeChange = (item: any) => {
   homeSearchStore.setSelectedSearch(item)
@@ -116,8 +176,22 @@ const onSearch = () => {
   )
 }
 
+const onSearchBlur = () => {
+  setTimeout(() => {
+    isFocus.value = false
+    showAssociateList.value = false
+  }, 500)
+}
+
 const handleClose = () => {
   homeSearchStore.setSearchVal('')
+}
+
+const onAssociateSearch = (item: string) => {
+  homeSearchStore.setSearchVal(item)
+  window.open(
+    `${homeSearchStore.selectedSearch.searchUrl}${homeSearchStore.searchVal}`
+  )
 }
 
 onMounted(() => {
@@ -136,6 +210,14 @@ onMounted(() => {
 .search-container {
   margin: 0 auto;
   overflow: hidden;
+}
+
+.associat-item {
+  padding: 4px 8px;
+  &:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+  }
 }
 
 .search-input {

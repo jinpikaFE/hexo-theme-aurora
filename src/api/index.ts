@@ -8,3 +8,17 @@ export async function getSeetingSortTree() {
     method: 'get'
   })
 }
+
+/** 获取getSeetingSortTree */
+export async function getAssociatList(params: { wd: string }) {
+  return server.request({
+    url: '/api/v1/baidu/su',
+    method: 'get',
+
+    params: {
+      p: 3,
+      ie: 'UTF-8',
+      ...params
+    }
+  })
+}

@@ -69,6 +69,7 @@ import defaultCover from '@/assets/default-cover.jpg'
 import { useI18n } from 'vue-i18n'
 import VueEasyLightbox from 'vue-easy-lightbox'
 import FooterLink from './components/Footer/FooterLink.vue'
+import { useHomeSearchStore } from '@/stores/homeSearch'
 
 export default defineComponent({
   name: 'App',
@@ -89,6 +90,14 @@ export default defineComponent({
     const searchStore = useSearchStore()
     const MOBILE_WITH = 1024 // Using the mobile width by Bootstrap design.
     const { t } = useI18n()
+    const homeSearchStore = useHomeSearchStore()
+
+    ;(window as any).baidu = {
+      sug: (res: any) => {
+        console.log(res)
+        homeSearchStore.setAssociateList(res?.s)
+      }
+    }
 
     const appWrapperClass = 'app-wrapper'
     const loadingBarClass = ref({

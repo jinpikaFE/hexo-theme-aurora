@@ -30,7 +30,8 @@ export const useHomeSearchStore = defineStore({
   id: 'homeSearchStore',
   state: () => ({
     searchVal: '',
-    selectedSearch: SearchTypeList[0]
+    selectedSearch: SearchTypeList[0],
+    associateList: []
   }),
   getters: {},
   actions: {
@@ -46,6 +47,9 @@ export const useHomeSearchStore = defineStore({
     },
     setSelectedSearch(val: any) {
       this.selectedSearch = val
+    },
+    setAssociateList(val: any) {
+      this.associateList = val
     }
   }
 })
