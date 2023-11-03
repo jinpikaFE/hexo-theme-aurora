@@ -8,8 +8,8 @@
           class="flex flex-col lg:flex-row gap-6 lg:gap-12 row-span-1 lg:col-span-3 text-center lg:text-left"
         >
           <ul class="flex flex-col gap-1.5">
-            <!-- <li>
-              Copyright © 2019 - {{ currentYear }}
+            <li>
+              Copyright © {{ currentYear }} 浙ICP备2020041576号-1
               <b class="font-extrabold">{{ themeConfig.site.author }}</b>
               . All Rights Reserved.
             </li>
@@ -26,7 +26,7 @@
                   Aurora v{{ themeConfig.version }}
                 </b>
               </a>
-            </li> -->
+            </li>
           </ul>
           <ul class="flex flex-col flex-1 gap-1.5">
             <li
