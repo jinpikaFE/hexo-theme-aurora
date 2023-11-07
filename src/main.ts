@@ -31,12 +31,14 @@ const app = createApp(App)
     error: defaultCover
   })
 
-app.use(webSee, {
-  dsn: `${import.meta.env.VITE_MONITOR_URL}/v1/mgb/monitor`,
-  apikey: import.meta.env.VITE_APP_NAME,
-  userId: import.meta.env.VITE_APP_NAME
-})
-webSee.use(recordscreen)
+if (import.meta.env.MODE !== 'development') {
+  app.use(webSee, {
+    dsn: `${import.meta.env.VITE_MONITOR_URL}/v1/mgb/monitor`,
+    apikey: import.meta.env.VITE_APP_NAME,
+    userId: import.meta.env.VITE_APP_NAME
+  })
+  webSee.use(recordscreen)
+}
 
 registerObSkeleton(app)
 registerScrollSpy(app)
