@@ -62,7 +62,9 @@ export const useAppStore = defineStore('app', {
     /** Tracking if the blog config is ready */
     configReady: false,
     /** Is search modal opened */
-    openSearchModal: false
+    openSearchModal: false,
+    /** uv埋点信息 */
+    uvInfo: {}
   }),
   getters: {
     getTheme: state => state.theme,
@@ -140,6 +142,9 @@ export const useAppStore = defineStore('app', {
     },
     handleSearchOpen() {
       if (!this.openSearchModal) this.openSearchModal = true
+    },
+    setUvInfo(data: any) {
+      this.uvInfo = data
     }
   }
 })

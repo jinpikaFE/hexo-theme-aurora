@@ -18,6 +18,8 @@ import 'virtual:svg-icons-register'
 import { registerObSkeleton } from '@/components/LoadingSkeleton'
 import { registerScrollSpy } from 'vue3-scroll-spy'
 import defaultCover from '@/assets/default-cover.jpg'
+import webSee from '@websee/core'
+import recordscreen from '@websee/recordscreen'
 
 const app = createApp(App)
   .use(createPinia())
@@ -28,6 +30,13 @@ const app = createApp(App)
     loading: defaultCover,
     error: defaultCover
   })
+
+app.use(webSee, {
+  dsn: `${import.meta.env.VITE_MONITOR_URL}/v1/mgb/monitor`,
+  apikey: import.meta.env.VITE_APP_NAME,
+  userId: import.meta.env.VITE_APP_NAME
+})
+webSee.use(recordscreen)
 
 registerObSkeleton(app)
 registerScrollSpy(app)

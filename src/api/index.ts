@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 import server from '@/server'
 
+const VITE_JINPIKAAI_URL = import.meta.env.VITE_JINPIKAAI_URL
+
 /** 获取getSeetingSortTree */
 export async function getSeetingSortTree() {
   return server.request({
@@ -36,5 +38,14 @@ export async function getAssociatList(params: { wd: string }) {
       ie: 'UTF-8',
       ...params
     }
+  })
+}
+
+/** 获取ip信息 */
+export async function getIpInfo() {
+  return server.request({
+    url: '/api/common/ipInfo',
+    method: 'get',
+    baseURL: VITE_JINPIKAAI_URL
   })
 }

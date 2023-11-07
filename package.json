@@ -30,6 +30,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@websee/core": "^4.0.2",
+    "@websee/recordscreen": "^4.0.2",
     "axios": "^1.5.0",
     "js-cookie": "^3.0.5",
     "jsonp": "^0.2.1",

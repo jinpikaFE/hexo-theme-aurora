@@ -70,6 +70,8 @@ import { useI18n } from 'vue-i18n'
 import VueEasyLightbox from 'vue-easy-lightbox'
 import FooterLink from './components/Footer/FooterLink.vue'
 import { useHomeSearchStore } from '@/stores/homeSearch'
+import webSee from '@websee/core'
+import { getIpInfo } from './api'
 
 export default defineComponent({
   name: 'App',
@@ -91,6 +93,8 @@ export default defineComponent({
     const MOBILE_WITH = 1024 // Using the mobile width by Bootstrap design.
     const { t } = useI18n()
     const homeSearchStore = useHomeSearchStore()
+
+    let isHandled = false
 
     ;(window as any).baidu = {
       sug: (res: any) => {
@@ -140,6 +144,17 @@ export default defineComponent({
           initialCopyrightScript()
         }
       })
+
+      const res = await getIpInfo()
+      if (res?.code === 200) {
+        appStore.setUvInfo({
+          ip: res?.data?.ip,
+          startTime: new Date().getTime(),
+          area: `${res?.data?.countryName || ''}${
+            res?.data?.provinceName || ''
+          }${res?.data?.cityName || ''}`
+        })
+      }
     }
 
     const copyEventHandler = (event: any) => {
@@ -183,7 +198,30 @@ export default defineComponent({
 
     onBeforeMount(initialApp)
 
+    const handlePageClose = () => {
+      if (!isHandled) {
+        // Your cleanup logic or confirmation message here
+        webSee.log({
+          type: 'uv',
+          message: appStore.uvInfo
+        })
+        isHandled = true
+      }
+    }
+    const addEventListeners = () => {
+      window.addEventListener('beforeunload', handlePageClose)
+      window.addEventListener('pagehide', handlePageClose)
+      window.addEventListener('unload', handlePageClose)
+    }
+
+    const removeEventListeners = () => {
+      window.removeEventListener('beforeunload', handlePageClose)
+      window.removeEventListener('pagehide', handlePageClose)
+      window.removeEventListener('unload', handlePageClose)
+    }
+
     onUnmounted(() => {
+      removeEventListeners()
       document.removeEventListener('copy', copyEventHandler)
       window.removeEventListener('resize', resizeHandler)
     })
@@ -198,6 +236,8 @@ export default defineComponent({
       wrapperStyle.value = {
         'min-height': wrapperHeight + 'px'
       }
+
+      addEventListeners()
     })
 
     /**
