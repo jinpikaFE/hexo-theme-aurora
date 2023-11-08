@@ -27,6 +27,14 @@
                 </b>
               </a>
             </li>
+            <li>
+              联系我们
+              <a href="mailto:847164495@qq.com">
+                <b class="font-extrabold border-b-2 border-ob hover:text-ob">
+                  847164495@qq.com
+                </b>
+              </a>
+            </li>
           </ul>
           <ul class="flex flex-col flex-1 gap-1.5">
             <li
